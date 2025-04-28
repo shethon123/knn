@@ -23,36 +23,20 @@ w_values = ['uniform', 'distance']
 #reading the test data
 #hint: to convert values to float while reading them -> np.array(df.values)[:,-1].astype('f')
 df = pd.read_csv('weather_training.csv', sep=',', header=0)
-data_training = np.array(df.values)[:,-1].astype('f')
+data_training = np.array(df.values)[:,-1]
 
 X_training = np.array(df.values)[:,1:-1].astype('f')
 y_training = np.array(df.values)[:,-1].astype('f')
 
-for i in range(len(y_training)):
-
-    difference = 100
-    closest = 0
-    for j in classes:
-        if abs(y_training[i] - j) < difference:
-            closest = j
-            difference = abs(y_training[i] - j)
-    y_training[i] = classes.index(closest)
-
+y_training = np.digitize(y_training, classes)
 
 df = pd.read_csv('weather_test.csv', sep=',', header=0)
-data_training = np.array(df.values)[:,-1].astype('f')
+data_training = np.array(df.values)[:,-1]
 
 X_test = np.array(df.values)[:,1:-1].astype('f')
 y_test = np.array(df.values)[:,-1].astype('f')
 
-for i in range(len(y_test)):
-    difference = 100
-    closest = 0
-    for j in classes:
-        if abs(y_test[i] - j) < difference:
-            closest = j
-            difference = abs(y_test[i] - j)
-    y_test[i] = classes.index(closest)
+y_test = np.digitize(y_test, classes)
 
 #loop over the hyperparameter values (k, p, and w) ok KNN
 #--> add your Python code here
